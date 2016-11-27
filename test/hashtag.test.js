@@ -1,7 +1,7 @@
-import test from 'ava';
+/* eslint-env jest */
 import { parse } from '..';
 
-test('Single hashtag using octothorpe', t => {
+it('Single hashtag using octothorpe', () => {
   const actual = parse('#hashtag');
   const expected = {
     text: '#hashtag',
@@ -13,10 +13,10 @@ test('Single hashtag using octothorpe', t => {
     }
   };
 
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });
 
-test('Single hashtag using sharp sign', t => {
+it('Single hashtag using sharp sign', () => {
   const actual = parse('＃sharptag');
   const expected = {
     text: '＃sharptag',
@@ -28,10 +28,10 @@ test('Single hashtag using sharp sign', t => {
     }
   };
 
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });
 
-test('Multiple hashtags', t => {
+it('Multiple hashtags', () => {
   const actual = parse('#hashtag ＃sharptag');
   const expected = {
     text: '#hashtag ＃sharptag',
@@ -46,10 +46,10 @@ test('Multiple hashtags', t => {
     }
   };
 
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });
 
-test('Non-hashtag text', t => {
+it('Non-hashtag text', () => {
   const actual = parse('This is not a # hashtag');
   const expected = {
     text: 'This is not a # hashtag',
@@ -61,5 +61,5 @@ test('Non-hashtag text', t => {
     }
   };
 
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });

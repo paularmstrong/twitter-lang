@@ -1,7 +1,7 @@
-import test from 'ava';
+/* eslint-env jest */
 import { parse } from '..';
 
-test('Single cashtag', t => {
+it('Single cashtag', () => {
   const actual = parse('$TWTR');
   const expected = {
     text: '$TWTR',
@@ -13,10 +13,10 @@ test('Single cashtag', t => {
     }
   };
 
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });
 
-test('Multiple cashtags', t => {
+it('Multiple cashtags', () => {
   const actual = parse('$TWTR $tsla');
   const expected = {
     text: '$TWTR $tsla',
@@ -31,10 +31,10 @@ test('Multiple cashtags', t => {
     }
   };
 
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });
 
-test('Non-cashtag text', t => {
+it('Non-cashtag text', () => {
   const actual = parse('This is not a $ cashtag');
   const expected = {
     text: 'This is not a $ cashtag',
@@ -46,5 +46,5 @@ test('Non-cashtag text', t => {
     }
   };
 
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });

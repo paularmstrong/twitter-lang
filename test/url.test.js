@@ -1,7 +1,7 @@
-import test from 'ava';
+/* eslint-env jest */
 import { parse } from '..';
 
-test('Single URL', t => {
+it('Single URL', () => {
   const actual = parse('http://twitter.com');
   const expected = {
     text: 'http://twitter.com',
@@ -13,10 +13,10 @@ test('Single URL', t => {
     }
   };
 
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });
 
-test('Multiple URLs', t => {
+it('Multiple URLs', () => {
   const actual = parse('http://twitter.com/ https://google.com');
   const expected = {
     text: 'http://twitter.com/ https://google.com',
@@ -31,5 +31,5 @@ test('Multiple URLs', t => {
     }
   };
 
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });

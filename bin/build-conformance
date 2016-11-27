@@ -36,7 +36,7 @@ Object.entries(files).forEach(([file, { transforms = {}, skip = [] }]) => {
     const shouldSkip = skip.indexOf(suite) >= 0;
 
     const header = [
-      "import test from 'ava';",
+      "/* eslint-env jest */",
       "import { parse } from '../../..';",
       (transform && ''),
       (transform && `const transform = ${transform};`)
@@ -46,15 +46,15 @@ Object.entries(files).forEach(([file, { transforms = {}, skip = [] }]) => {
       return [
         ...state,
         '',
-        `test${shouldSkip ? '.skip' : ''}(${JSON.stringify(description)}, t => {`,
+        `it${shouldSkip ? '.skip' : ''}(${JSON.stringify(description)}, () => {`,
         `  const actual = parse(${JSON.stringify(text)});`,
         `  const expected = ${JSON.stringify(expected)};`,
         '',
-        `  t.deepEqual(${transform ? 'transform(actual)' : 'actual'}, expected);`,
+        `  expect(${transform ? 'transform(actual)' : 'actual'}).toEqual(expected);`,
         '});'
       ];
     }, []);
 
-    fs.writeFileSync(Path.join(directory, `${suite}.js`), [...header, ...content, ''].filter(line => line != null).join('\n'));
+    fs.writeFileSync(Path.join(directory, `${suite}.test.js`), [...header, ...content, ''].filter(line => line != null).join('\n'));
   });
 });

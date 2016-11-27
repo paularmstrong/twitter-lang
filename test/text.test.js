@@ -1,7 +1,7 @@
-import test from 'ava';
+/* eslint-env jest */
 import { parse } from '..';
 
-test(t => {
+it('hello', () => {
   const actual = parse('hello');
   const expected = {
     text: 'hello',
@@ -13,10 +13,10 @@ test(t => {
     }
   };
 
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });
 
-test(t => {
+it('hello world', () => {
   const actual = parse('hello world');
   const expected = {
     text: 'hello world',
@@ -28,5 +28,5 @@ test(t => {
     }
   };
 
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });

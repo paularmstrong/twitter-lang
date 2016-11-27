@@ -1,22 +1,22 @@
-import test from 'ava';
+/* eslint-env jest */
 import { parse } from '..';
 
-test('Single user using at-sign', t => {
-  const actual = parse('@cameronhunter');
+it('Single user using at-sign', () => {
+  const actual = parse('@username');
   const expected = {
-    text: '@cameronhunter',
+    text: '@username',
     entities: {
       hashtags: [],
       symbols: [],
       urls: [],
-      user_mentions: [{ screen_name: 'cameronhunter', indices: [0, 14] }]
+      user_mentions: [{ screen_name: 'username', indices: [0, 14] }]
     }
   };
 
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });
 
-test('Single user using alternative at-sign', t => {
+it('Single user using alternative at-sign', () => {
   const actual = parse('＠twitter');
   const expected = {
     text: '＠twitter',
@@ -28,28 +28,28 @@ test('Single user using alternative at-sign', t => {
     }
   };
 
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });
 
-test('Multiple users', t => {
-  const actual = parse('@cameronhunter ＠twitter');
+it('Multiple users', () => {
+  const actual = parse('@username ＠twitter');
   const expected = {
-    text: '@cameronhunter ＠twitter',
+    text: '@username ＠twitter',
     entities: {
       hashtags: [],
       symbols: [],
       urls: [],
       user_mentions: [
-        { screen_name: 'cameronhunter', indices: [0, 14] },
+        { screen_name: 'username', indices: [0, 14] },
         { screen_name: 'twitter', indices: [15, 23] }
       ]
     }
   };
 
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });
 
-test('Non-user text', t => {
+it('Non-user text', () => {
   const actual = parse('this is not a @ user');
   const expected = {
     text: 'this is not a @ user',
@@ -61,5 +61,5 @@ test('Non-user text', t => {
     }
   };
 
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });

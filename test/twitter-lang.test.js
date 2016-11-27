@@ -1,22 +1,22 @@
-import test from 'ava';
+/* eslint-env jest */
 import { parse } from '..';
 
-test(t => {
-  const actual = parse('hello @cameronhunter');
+it('with @username', () => {
+  const actual = parse('hello @username');
   const expected = {
-    text: 'hello @cameronhunter',
+    text: 'hello @username',
     entities: {
       hashtags: [],
       symbols: [],
       urls: [],
-      user_mentions: [{ screen_name: 'cameronhunter', indices: [6, 20] }]
+      user_mentions: [{ screen_name: 'username', indices: [6, 15] }]
     }
   };
 
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });
 
-test(t => {
+it('with all tag types', () => {
   const actual = parse('Hello @world, I love #hashtags and $twtr!');
   const expected = {
     text: 'Hello @world, I love #hashtags and $twtr!',
@@ -28,5 +28,5 @@ test(t => {
     }
   };
 
-  t.deepEqual(actual, expected);
+  expect(actual).toEqual(expected);
 });
