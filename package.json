@@ -8,14 +8,15 @@
   "scripts": {
     "build": "npm run clean && npm-run-all --parallel build:development build:production",
     "build:development": "npm-run-all --parallel build:speed build:size",
+    "build:test": "npm run build:speed",
     "build:production": "NODE_ENV=production npm-run-all --parallel build:speed build:size",
     "build:speed": "PEGJS_OPTIMIZE=speed rollup -c",
     "build:size": "PEGJS_OPTIMIZE=size rollup -c",
     "build:conformance": "rimraf test/conformance && babel-node bin/build-conformance",
     "clean": "rimraf build",
-    "pretest": "npm run build",
+    "pretest": "npm run build:test",
     "test": "jest",
-    "test:watch": "npm run test --watch"
+    "test:conformance": "npm run pretest && jest -- conformance/extract"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
@@ -32,10 +33,5 @@
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-pegjs": "^2.1.1",
     "rollup-plugin-uglify": "^1.0.1"
-  },
-  "jest": {
-    "testPathDirs": [
-      "<rootDir>/test"
-    ]
   }
 }
