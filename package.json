@@ -6,15 +6,16 @@
   "license": "MIT",
   "main": "build/twitter-lang.speed.min.js",
   "scripts": {
-    "build": "npm-run-all --parallel build:development build:production",
+    "build": "npm run clean && npm-run-all --parallel build:development build:production",
     "build:development": "npm-run-all --parallel build:speed build:size",
     "build:production": "NODE_ENV=production npm-run-all --parallel build:speed build:size",
     "build:speed": "PEGJS_OPTIMIZE=speed rollup -c",
     "build:size": "PEGJS_OPTIMIZE=size rollup -c",
-    "build:conformance": "rm -rf test/conformance && babel-node bin/build-conformance",
+    "build:conformance": "rimraf test/conformance && babel-node bin/build-conformance",
+    "clean": "rimraf build",
     "pretest": "npm run build",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "npm run test --watch"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
@@ -26,6 +27,7 @@
     "mkdirp": "^0.5.1",
     "npm-run-all": "^3.1.1",
     "pegjs": "^0.10.0",
+    "rimraf": "^2.5.4",
     "rollup": "^0.36.3",
     "rollup-plugin-babel": "^2.6.1",
     "rollup-plugin-pegjs": "^2.1.1",
