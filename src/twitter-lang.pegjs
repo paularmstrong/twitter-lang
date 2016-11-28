@@ -35,13 +35,15 @@ Entity
     { return { mention }; }
 
 Cashtag
-  = cashtag:CashtagToken CashtagToken+
+  = NonSpace cashtag:CashtagToken
+    { return null; }
+  / cashtag:CashtagToken CashtagToken+
     { return cashtag; }
   / cashtag:CashtagToken &(Space / Punctuation / End)
     { return cashtag; }
 
 CashtagToken
-  = "$" symbol:$([a-z]i+) subsymbol:$(("." / "_") [a-z]i+)?
+  = "$" symbol:$([a-zA-Z]+) subsymbol:$(("." / "_") [a-zA-Z]+)?
     { return symbol.length <= 6 && { text: symbol + (subsymbol || ''), ...indices(location()) }; }
 
 Hashtag
@@ -143,6 +145,11 @@ Space
   / "\u3000"        // White_Space # Zs       IDEOGRAPHIC SPACE
   / [\u0009-\u000D] // White_Space # Cc   [5] <control-0009>..<control-000D>
   / [\u2000-\u200A] // White_Space # Zs  [11] EN QUAD..HAIR SPACE
+
+NonSpace
+  = $([^\u0020\u0085\u00A0\y1680\u180E\u2028\u2029\u202F\u205F\u3000])
+  / "[^\u2000-\u200A]"
+  / "[^\u2000-\u200A]"
 
 Punctuation
   = "!" / "'" / "#" / "%" / "&" / "'" / "(" / ")" / "*" / "+" / "," / "\\" / "-"

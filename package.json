@@ -8,7 +8,7 @@
   "scripts": {
     "build": "npm run clean && npm-run-all --parallel build:development build:production",
     "build:development": "npm-run-all --parallel build:speed build:size",
-    "build:test": "npm run build:speed",
+    "build:test": "NODE_ENV=production npm run build:speed",
     "build:production": "NODE_ENV=production npm-run-all --parallel build:speed build:size",
     "build:speed": "PEGJS_OPTIMIZE=speed rollup -c",
     "build:size": "PEGJS_OPTIMIZE=size rollup -c",
