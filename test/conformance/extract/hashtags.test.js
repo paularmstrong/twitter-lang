@@ -199,7 +199,7 @@ describe('hashtags', () => {
 
   it("Hashtag with ideographic iteration mark", () => {
     const actual = parse("#云々 #学問のすゝめ #いすゞ #各〻 #各〃");
-    const expected = ["云々","学問のすゝめ","いすゞ","各〻","���〃"];
+    const expected = ["云々","学問のすゝめ","いすゞ","各〻","各〃"];
     expect(transform(actual)).toEqual(expected);
   });
 

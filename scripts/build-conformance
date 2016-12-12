@@ -59,12 +59,13 @@ Object.entries(files).forEach(([ file, { transforms } ]) => {
     let contents = '';
     response.on('data', (buffer) => {
       if (buffer) {
-        contents += buffer.toString();
+        contents += buffer.toString('utf8');
       }
     });
 
     response.on('end', () => {
-      const { tests: suites } = yaml(contents);
+      // There's a weird bug in pulling the yaml file that converts some characters incorrectly
+      const { tests: suites } = yaml(contents.replace(/���/g, '各'));
       Object.entries(suites).forEach(([ suite, tests ]) => writeTest(suite, tests, transforms[suite], directory));
     });
   });
