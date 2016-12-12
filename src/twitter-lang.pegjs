@@ -47,8 +47,13 @@ CashtagToken
     { return symbol.length <= 6 && { text: symbol + (subsymbol || ''), ...indices(location()) }; }
 
 Hashtag
-  = ("#" / "＃") text:HashtagText
+  = HashtagPrefix Protocol? URLToken
+    { return null; }
+  / HashtagPrefix text:HashtagText
     { return { text, ...indices(location()) }; }
+
+HashtagPrefix
+  = "#" / "＃"
 
 HashtagText
   = $(((Number / HashtagSpecialChar)* LetterOrMark (Number / HashtagSpecialChar)*)+)
