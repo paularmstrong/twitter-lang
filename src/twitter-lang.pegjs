@@ -47,7 +47,9 @@ CashtagToken
     { return symbol.length <= 6 && { text: symbol + (subsymbol || ''), ...indices(location()) }; }
 
 Hashtag
-  = HashtagPrefix Protocol? URLToken
+  = (LetterOrMark / Number) HashtagPrefix HashtagText
+    { return null; }
+  / HashtagPrefix Protocol? URLToken
     { return null; }
   / HashtagPrefix text:HashtagText
     { return { text, ...indices(location()) }; }
@@ -83,7 +85,7 @@ UserNameChar
   = [a-z0-9_]i
 
 UserTokenInvalidPrefix
-  = UserNameChar / "!" / "#" / "$" / "%" / "&" / "*" / "@" / "＠"
+  = UserNameChar / UserPrefix / HashtagPrefix / "!" / "$" / "%" / "&" / "*"
 
 UserTokenInvalidSuffix
   = UserPrefix / LatinAccent / "://"
