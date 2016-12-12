@@ -68,7 +68,7 @@ User
     { return null; }
   / [rt]i ":"? user:UserToken
     { return user; }
-  / (UserTokenInvalidPrefix UserToken)
+  / UserTokenInvalidPrefix UserToken
     { return null; }
   / UserToken
 
@@ -97,7 +97,7 @@ ListSlug
 
 URL
   = $(URLInvalidPrefix Protocol? URLToken)
-    { return null;' '}
+    { return null; }
   / tco:$("http" "s"? "://t.co/" [a-z0-9]i+)
     { return { url: tco, ...indices(location()) }; }
   / $(SubDomain* DomainChar+ "." CCTLD) &(Space / End)
