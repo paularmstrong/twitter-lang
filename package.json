@@ -12,11 +12,11 @@
     "build:production": "NODE_ENV=production npm-run-all --parallel build:speed build:size",
     "build:speed": "PEGJS_OPTIMIZE=speed rollup -c",
     "build:size": "PEGJS_OPTIMIZE=size rollup -c",
-    "build:conformance": "rimraf test/conformance && babel-node bin/build-conformance",
+    "build:conformance": "rimraf test/conformance && babel-node scripts/build-conformance",
     "clean": "rimraf build",
     "pretest": "npm run build:test",
     "test": "jest",
-    "test:conformance": "npm run pretest && jest -- conformance/extract"
+    "test:conformance": "npm run pretest && jest --config scripts/jest-config-conformance.json -- conformance/extract"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
@@ -28,6 +28,7 @@
     "mkdirp": "^0.5.1",
     "npm-run-all": "^3.1.1",
     "pegjs": "^0.10.0",
+    "replace": "^0.3.0",
     "rimraf": "^2.5.4",
     "rollup": "^0.36.3",
     "rollup-plugin-babel": "^2.6.1",

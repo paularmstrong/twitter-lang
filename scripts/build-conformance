@@ -39,22 +39,22 @@ Object.entries(files).forEach(([file, { transforms = {}, skip = [] }]) => {
       "/* eslint-env jest */",
       "import { parse } from '../../..';",
       (transform && ''),
-      (transform && `const transform = ${transform};`)
+      (transform && `const transform = ${transform};`),
+      `\ndescribe('${suite}', () => {`
     ];
 
     const content = tests.reduce((state, { description, text, expected }) => {
       return [
         ...state,
-        '',
-        `it${shouldSkip ? '.skip' : ''}(${JSON.stringify(description)}, () => {`,
-        `  const actual = parse(${JSON.stringify(text)});`,
-        `  const expected = ${JSON.stringify(expected)};`,
-        '',
-        `  expect(${transform ? 'transform(actual)' : 'actual'}).toEqual(expected);`,
-        '});'
+        `
+  it${shouldSkip ? '.skip' : ''}(${JSON.stringify(description)}, () => {
+    const actual = parse(${JSON.stringify(text)});
+    const expected = ${JSON.stringify(expected)};
+    expect(${transform ? 'transform(actual)' : 'actual'}).toEqual(expected);
+  });`
       ];
     }, []);
 
-    fs.writeFileSync(Path.join(directory, `${suite}.test.js`), [...header, ...content, ''].filter(line => line != null).join('\n'));
+    fs.writeFileSync(Path.join(directory, `${suite}.test.js`), [...header, ...content, '', '});'].filter(line => line != null).join('\n'));
   });
 });

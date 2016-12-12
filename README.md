@@ -2,17 +2,21 @@
 
 A formal grammar defining tweet text.
 
-This is a work in progress – it is *not* ready for use. It currently passes 171/206 (83%) of the [twitter-text conformance tests](https://github.com/twitter/twitter-text/tree/2143a72d3da6bca49dc2f6d5c2df7d539d191cab/conformance).
+This is a work in progress – it is *not* ready for use. 
+
+### Conformance Tests
+This package aims to conform to the [twitter-text conformance tests](https://github.com/twitter/twitter-text/tree/2143a72d3da6bca49dc2f6d5c2df7d539d191cab/conformance)
+Results: 181/206 (88%)
 
 ## Example
 
 ```javascript
 import { parse } from 'twitter-lang';
-import test from 'ava';
 
-test(t => {
-  const tweet = parse('Hello @world, I love #hashtags and $twtr! https://twitter.com');
-  const expected = {
+parse('Hello @world, I love #hashtags and $twtr! https://twitter.com');
+
+// ->
+  {
     text: 'Hello @world, I love #hashtags and $twtr! https://twitter.com',
     entities: {
       hashtags: [
@@ -30,6 +34,4 @@ test(t => {
     }
   };
 
-  t.same(tweet, expected);
-});
 ```
