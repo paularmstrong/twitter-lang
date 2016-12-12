@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import { parse } from '../../..';
 
-const transform = output => output.entities.urls.map(url => url.url);
+const transform = (output) => output.entities.urls.map((url) => url.url);
 
 describe('urls', () => {
 

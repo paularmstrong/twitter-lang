@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import { parse } from '../../..';
 
-const transform = output => output.entities.user_mentions.filter(({ indices }) => indices[0] == 0).map(mention => mention.screen_name)[0] || null;
+const transform = (output) => output.entities.user_mentions.filter(({ indices }) => indices[0] == 0).map((mention) => mention.screen_name)[0] || null;
 
 describe('replies', () => {
 

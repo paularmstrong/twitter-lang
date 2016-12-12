@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import { parse } from '../../..';
 
-const transform = output => output.entities.user_mentions.map(mention => ({ list_slug: "", ...mention }));
+const transform = (output) => output.entities.user_mentions.map((mention) => ({ list_slug: "", ...mention }));
 
 describe('mentions_or_lists_with_indices', () => {
 

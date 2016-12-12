@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import { parse } from '../../..';
 
-const transform = output => output.entities.hashtags.reduce((state, { text, ...rest }) => [...state, { hashtag: text, ...rest }], []);
+const transform = (output) => output.entities.hashtags.reduce((state, { text, ...rest }) => [...state, { hashtag: text, ...rest }], []);
 
 describe('hashtags_with_indices', () => {
 

@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import { parse } from '../../..';
 
-const transform = output => output.entities.user_mentions.map(mention => mention.screen_name);
+const transform = (output) => output.entities.user_mentions.map((mention) => mention.screen_name);
 
 describe('mentions', () => {
 

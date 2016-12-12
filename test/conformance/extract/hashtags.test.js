@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import { parse } from '../../..';
 
-const transform = output => output.entities.hashtags.map(hashtag => hashtag.text);
+const transform = (output) => output.entities.hashtags.map((hashtag) => hashtag.text);
 
 describe('hashtags', () => {
 

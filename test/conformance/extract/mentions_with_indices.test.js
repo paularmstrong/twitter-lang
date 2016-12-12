@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import { parse } from '../../..';
 
-const transform = output => output.entities.user_mentions;
+const transform = (output) => output.entities.user_mentions;
 
 describe('mentions_with_indices', () => {
 

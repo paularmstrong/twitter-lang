@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import { parse } from '../../..';
 
-const transform = output => output.entities.symbols.reduce((state, { text, ...rest }) => [...state, { cashtag: text, ...rest }], []);
+const transform = (output) => output.entities.symbols.reduce((state, { text, ...rest }) => [...state, { cashtag: text, ...rest }], []);
 
 describe('cashtags_with_indices', () => {
 

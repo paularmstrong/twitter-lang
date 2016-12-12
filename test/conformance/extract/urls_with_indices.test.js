@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import { parse } from '../../..';
 
-const transform = output => output.entities.urls;
+const transform = (output) => output.entities.urls;
 
 describe('urls_with_indices', () => {
 

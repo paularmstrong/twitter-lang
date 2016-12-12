@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import { parse } from '../../..';
 
-const transform = output => output.entities.symbols.map(symbol => symbol.text);
+const transform = (output) => output.entities.symbols.map((symbol) => symbol.text);
 
 describe('cashtags', () => {
 
