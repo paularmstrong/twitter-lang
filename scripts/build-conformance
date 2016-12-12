@@ -2,13 +2,12 @@
 
 import { safeLoad as yaml } from 'js-yaml';
 import fs from 'fs';
+import https from 'https';
 import mkdirp from 'mkdirp';
 import Path from 'path';
 
-const path = (...args) => Path.join(__dirname, ...args);
-
 const files = {
-  [path('..', 'conformance', 'extract.yml')]: {
+  'extract.yml': {
     transforms: {
       cashtags: 'output => output.entities.symbols.map(symbol => symbol.text)',
       cashtags_with_indices: 'output => output.entities.symbols.reduce((state, { text, ...rest }) => [...state, { cashtag: text, ...rest }], [])',
@@ -24,37 +23,48 @@ const files = {
   }
 };
 
-Object.entries(files).forEach(([file, { transforms = {}, skip = [] }]) => {
-  const directory = path('..', 'test', 'conformance', Path.basename(file, '.yml'));
+const writeTest = (suite, tests, transform, directory) => {
+  const header = [
+    "/* eslint-env jest */",
+    "import { parse } from '../../..';",
+    (transform && ''),
+    (transform && `const transform = ${transform};`),
+    `\ndescribe('${suite}', () => {`
+  ];
 
-  mkdirp.sync(directory);
-
-  const { tests: suites } = yaml(fs.readFileSync(file, 'utf8'));
-
-  Object.entries(suites).forEach(([suite, tests]) => {
-    const transform = transforms[suite];
-    const shouldSkip = skip.indexOf(suite) >= 0;
-
-    const header = [
-      "/* eslint-env jest */",
-      "import { parse } from '../../..';",
-      (transform && ''),
-      (transform && `const transform = ${transform};`),
-      `\ndescribe('${suite}', () => {`
-    ];
-
-    const content = tests.reduce((state, { description, text, expected }) => {
-      return [
+  const content = tests.reduce((state, { description, text, expected }) => {
+    return [
         ...state,
         `
-  it${shouldSkip ? '.skip' : ''}(${JSON.stringify(description)}, () => {
+  it(${JSON.stringify(description)}, () => {
     const actual = parse(${JSON.stringify(text)});
     const expected = ${JSON.stringify(expected)};
     expect(${transform ? 'transform(actual)' : 'actual'}).toEqual(expected);
   });`
       ];
-    }, []);
+  }, []);
 
-    fs.writeFileSync(Path.join(directory, `${suite}.test.js`), [...header, ...content, '', '});'].filter(line => line != null).join('\n'));
+  fs.writeFileSync(
+    Path.join(directory, `${suite}.test.js`),
+    [...header, ...content, '', '});'].filter(line => line != null).join('\n')
+  );
+};
+
+Object.entries(files).forEach(([ file, { transforms } ]) => {
+  const directory = Path.join(__dirname, '..', 'test', 'conformance', Path.basename(file, '.yml'));
+  mkdirp.sync(directory);
+
+  https.get(`https://raw.githubusercontent.com/twitter/twitter-text/master/conformance/${file}`, (response) => {
+    let contents = '';
+    response.on('data', (buffer) => {
+      if (buffer) {
+        contents += buffer.toString();
+      }
+    });
+
+    response.on('end', () => {
+      const { tests: suites } = yaml(contents);
+      Object.entries(suites).forEach(([ suite, tests ]) => writeTest(suite, tests, transforms[suite], directory));
+    });
   });
 });

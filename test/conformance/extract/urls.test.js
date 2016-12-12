@@ -240,7 +240,7 @@ describe('urls', () => {
   });
 
   it("Extract URLs beginning with a non-breaking space (U+00A0)", () => {
-    const actual = parse("@user Try http:// example.com/path");
+    const actual = parse("@user Try http:// example.com/path");
     const expected = ["example.com/path"];
     expect(transform(actual)).toEqual(expected);
   });
