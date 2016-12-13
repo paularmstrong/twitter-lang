@@ -17,10 +17,12 @@ const files = {
       mentions: '(output) => output.entities.user_mentions.map((mention) => mention.screen_name)',
       mentions_or_lists_with_indices: '(output) => output.entities.user_mentions.map((mention) => ({ list_slug: "", ...mention }))',
       mentions_with_indices: '(output) => output.entities.user_mentions',
-      replies: '(output) => output.entities.user_mentions.filter(({ indices }) => indices[0] == 0).map((mention) => mention.screen_name)[0] || null',
       urls: '(output) => output.entities.urls.map((url) => url.url)',
       urls_with_indices: '(output) => output.entities.urls'
-    }
+    },
+    ignore: [
+      'replies' // Mentions covers all cases of replies. We don't do any special output/handling for reply vs mention
+    ]
   }
 };
 
@@ -51,7 +53,7 @@ const writeTest = (suite, tests, transform, directory) => {
   );
 };
 
-Object.entries(files).forEach(([ file, { transforms } ]) => {
+Object.entries(files).forEach(([ file, { transforms, ignore } ]) => {
   const directory = Path.join(__dirname, '..', 'test', 'conformance', Path.basename(file, '.yml'));
   mkdirp.sync(directory);
 
@@ -66,7 +68,12 @@ Object.entries(files).forEach(([ file, { transforms } ]) => {
     response.on('end', () => {
       // There's a weird bug in pulling the yaml file that converts some characters incorrectly
       const { tests: suites } = yaml(contents.replace(/���/g, '各'));
-      Object.entries(suites).forEach(([ suite, tests ]) => writeTest(suite, tests, transforms[suite], directory));
+      Object.entries(suites).forEach(([ suite, tests ]) => {
+        if (ignore.indexOf(suite) !== -1) {
+          return;
+        }
+        return writeTest(suite, tests, transforms[suite], directory);
+      });
     });
   });
 });
