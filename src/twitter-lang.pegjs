@@ -1,6 +1,12 @@
+/**
+ * Helper methods
+ */
 {
+  // Get the start and end indices of the matching entity
   const indices = ({ start, end }) => ({ indices: [start.offset, end.offset] });
-  const flatten = (input) => input ? [input] : [];
+
+  // Ensure the intput is an array
+  const makeArray = (input) => input && !Array.isArray(input) ? [input] : [];
 }
 
 start
@@ -9,10 +15,10 @@ start
       return {
         text: text(),
         entities: parts.reduce((state, part) => ({
-          hashtags: [...state.hashtags, ...flatten(part.hashtag)],
-          symbols: [...state.symbols, ...flatten(part.symbol)],
-          urls: [...state.urls, ...flatten(part.url)],
-          user_mentions: [...state.user_mentions, ...flatten(part.mention)]
+          hashtags: [...state.hashtags, ...makeArray(part.hashtag)],
+          symbols: [...state.symbols, ...makeArray(part.symbol)],
+          urls: [...state.urls, ...makeArray(part.url)],
+          user_mentions: [...state.user_mentions, ...makeArray(part.mention)]
         }), {
           hashtags: [],
           symbols: [],
@@ -34,6 +40,10 @@ Entity
   / mention:(List / User)
     { return { mention }; }
 
+/**
+ * Cashtags
+ */
+
 Cashtag
   = NonSpace cashtag:CashtagToken
     { return null; }
@@ -45,6 +55,10 @@ Cashtag
 CashtagToken
   = "$" symbol:$([a-z]i+) subsymbol:$(("." / "_") [a-z]i [a-z]i?)?
     { return symbol.length <= 6 && { text: symbol + (subsymbol || ''), ...indices(location()) }; }
+
+/**
+ * Hashtags
+ */
 
 Hashtag
   = (LetterOrMark / Number) HashtagPrefix HashtagText
@@ -62,6 +76,10 @@ HashtagText
 
 HashtagSpecialChar
   = $("_" / "\u200c" / "\u200d" / "\ua67e" / "\u05be" / "\u05f3" / "\u05f4" / "\uff5e" / "\u301c" / "\u309b" / "\u309c" / "\u30a0" / "\u30fb" / "\u3003" / "\u0f0b" / "\u0f0c" / "\u00b7")
+
+/**
+ * User @ mentions
+ */
 
 User
   = UserToken UserToken+
@@ -90,12 +108,20 @@ UserTokenInvalidPrefix
 UserTokenInvalidSuffix
   = UserPrefix / LatinAccent / "://"
 
+/**
+ * List @ mentions
+ */
+
 List
   = user:User list_slug:ListSlug
     { return { screen_name: user.screen_name, list_slug, ...indices(location()) }; }
 
 ListSlug
   = $("/" (Letter (Number / "_" / "-")*)+)
+
+/**
+ * URLs
+ */
 
 URL
   = $(URLInvalidPrefix Protocol URLToken)
@@ -154,9 +180,9 @@ Path
 Querystring
   = "?" URLQuerystringChar*
 
-/*******************************************************************************
+/**
  * Common
- ******************************************************************************/
+ */
 
 Space
   = "\u0020"        // White_Space # Zs       SPACE
