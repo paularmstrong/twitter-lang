@@ -98,7 +98,7 @@ ListSlug
   = $("/" (Letter (Number / "_" / "-")*)+)
 
 URL
-  = $(URLInvalidPrefix Protocol? URLToken)
+  = $(URLInvalidPrefix Protocol URLToken)
     { return null; }
   / tco:$("http" "s"? "://t.co/" [a-z0-9]i+)
     { return { url: tco, ...indices(location()) }; }
