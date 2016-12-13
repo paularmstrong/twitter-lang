@@ -1,4 +1,5 @@
 import babel from 'rollup-plugin-babel';
+import filesize from 'rollup-plugin-filesize';
 import pegjs from 'rollup-plugin-pegjs';
 import uglify from 'rollup-plugin-uglify';
 
@@ -17,6 +18,13 @@ export default {
   plugins: nonNull([
     pegjs({ optimize }),
     babel({ babelrc: false, presets: ['es2015-rollup', 'stage-1'] }),
-    isProduction ? uglify() : null
+    isProduction ? uglify() : null,
+    filesize({
+      render: (options, size, gzip) => `
+  Build:        ${dest}
+  Bundle Size:  ${size}
+  Compressed:   ${gzip}
+`
+    })
   ])
 }
