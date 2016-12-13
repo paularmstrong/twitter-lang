@@ -8,7 +8,7 @@ it('Single URL', () => {
     entities: {
       hashtags: [],
       symbols: [],
-      urls: [{ url: 'http://twitter.com', indices: [0, 18] }],
+      urls: [ { url: 'http://twitter.com', indices: [ 0, 18 ] } ],
       user_mentions: []
     }
   };
@@ -24,8 +24,8 @@ it('Multiple URLs', () => {
       hashtags: [],
       symbols: [],
       urls: [
-        { url: 'http://twitter.com/', indices: [0, 19] },
-        { url: 'https://google.com', indices: [20, 38] }
+        { url: 'http://twitter.com/', indices: [ 0, 19 ] },
+        { url: 'https://google.com', indices: [ 20, 38 ] }
       ],
       user_mentions: []
     }

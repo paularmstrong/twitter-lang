@@ -9,7 +9,7 @@ it('Single list using at-sign', () => {
       hashtags: [],
       symbols: [],
       urls: [],
-      user_mentions: [{ screen_name: 'username', list_slug: '/list-slug', indices: [0, 19] }]
+      user_mentions: [ { screen_name: 'username', list_slug: '/list-slug', indices: [ 0, 19 ] } ]
     }
   };
 
@@ -24,7 +24,7 @@ it('Single list using alternative at-sign', () => {
       hashtags: [],
       symbols: [],
       urls: [],
-      user_mentions: [{ screen_name: 'twitter', list_slug: '/tweeps', indices: [0, 15] }]
+      user_mentions: [ { screen_name: 'twitter', list_slug: '/tweeps', indices: [ 0, 15 ] } ]
     }
   };
 
@@ -40,8 +40,8 @@ it('Multiple lists', () => {
       symbols: [],
       urls: [],
       user_mentions: [
-        { screen_name: 'username', list_slug: '/list-slug', indices: [0, 19] },
-        { screen_name: 'twitter', list_slug: '/tweeps', indices: [20, 35] }
+        { screen_name: 'username', list_slug: '/list-slug', indices: [ 0, 19 ] },
+        { screen_name: 'twitter', list_slug: '/tweeps', indices: [ 20, 35 ] }
       ]
     }
   };

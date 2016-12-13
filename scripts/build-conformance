@@ -28,12 +28,18 @@ const files = {
 
 const writeTest = (suite, tests, transform, directory) => {
   const header = [
-    "/* eslint-env jest */",
-    "import { parse } from '../../..';",
+    '/* eslint-env jest */',
+    '/* eslint-disable max-len */',
+    'import { parse } from \'../../..\';',
     (transform && ''),
     (transform && `const transform = ${transform};`),
     `\ndescribe('${suite}', () => {`
   ];
+
+  const footer = [
+    '/* eslint-enable max-len */',
+    '});'
+  ]
 
   const content = tests.reduce((state, { description, text, expected }) => {
     return [
@@ -49,7 +55,7 @@ const writeTest = (suite, tests, transform, directory) => {
 
   fs.writeFileSync(
     Path.join(directory, `${suite}.test.js`),
-    [...header, ...content, '', '});'].filter(line => line != null).join('\n')
+    [...header, ...content, '', ...footer].filter(line => line != null).join('\n')
   );
 };
 

@@ -9,7 +9,7 @@ it('with @username', () => {
       hashtags: [],
       symbols: [],
       urls: [],
-      user_mentions: [{ screen_name: 'username', indices: [6, 15] }]
+      user_mentions: [ { screen_name: 'username', indices: [ 6, 15 ] } ]
     }
   };
 
@@ -21,10 +21,10 @@ it('with all tag types', () => {
   const expected = {
     text: 'Hello @world, I love #hashtags and $twtr!',
     entities: {
-      hashtags: [{ text: 'hashtags', indices: [21, 30] }],
-      symbols: [{ text: 'twtr', indices: [35, 40] }],
+      hashtags: [ { text: 'hashtags', indices: [ 21, 30 ] } ],
+      symbols: [ { text: 'twtr', indices: [ 35, 40 ] } ],
       urls: [],
-      user_mentions: [{ screen_name: 'world', indices: [6, 12] }]
+      user_mentions: [ { screen_name: 'world', indices: [ 6, 12 ] } ]
     }
   };
 

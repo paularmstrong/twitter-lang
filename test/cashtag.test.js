@@ -7,7 +7,7 @@ it('Single cashtag', () => {
     text: '$TWTR',
     entities: {
       hashtags: [],
-      symbols: [{ text: 'TWTR', indices: [0, 5] }],
+      symbols: [ { text: 'TWTR', indices: [ 0, 5 ] } ],
       urls: [],
       user_mentions: []
     }
@@ -23,8 +23,8 @@ it('Multiple cashtags', () => {
     entities: {
       hashtags: [],
       symbols: [
-        { text: 'TWTR', indices: [0, 5] },
-        { text: 'tsla', indices: [6, 11] }
+        { text: 'TWTR', indices: [ 0, 5 ] },
+        { text: 'tsla', indices: [ 6, 11 ] }
       ],
       urls: [],
       user_mentions: []

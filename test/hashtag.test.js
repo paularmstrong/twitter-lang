@@ -6,7 +6,7 @@ it('Single hashtag using octothorpe', () => {
   const expected = {
     text: '#hashtag',
     entities: {
-      hashtags: [{ text: 'hashtag', indices: [0, 8] }],
+      hashtags: [ { text: 'hashtag', indices: [ 0, 8 ] } ],
       symbols: [],
       urls: [],
       user_mentions: []
@@ -21,7 +21,7 @@ it('Single hashtag using sharp sign', () => {
   const expected = {
     text: '＃sharptag',
     entities: {
-      hashtags: [{ text: 'sharptag', indices: [0, 9] }],
+      hashtags: [ { text: 'sharptag', indices: [ 0, 9 ] } ],
       symbols: [],
       urls: [],
       user_mentions: []
@@ -37,8 +37,8 @@ it('Multiple hashtags', () => {
     text: '#hashtag ＃sharptag',
     entities: {
       hashtags: [
-        { text: 'hashtag', indices: [0, 8] },
-        { text: 'sharptag', indices: [9, 18] }
+        { text: 'hashtag', indices: [ 0, 8 ] },
+        { text: 'sharptag', indices: [ 9, 18 ] }
       ],
       symbols: [],
       urls: [],

@@ -3,12 +3,12 @@ import filesize from 'rollup-plugin-filesize';
 import pegjs from 'rollup-plugin-pegjs';
 import uglify from 'rollup-plugin-uglify';
 
-const nonNull = (array) => array.filter(x => !!x);
+const nonNull = (array) => array.filter((x) => !!x);
 
 const optimize = process.env.PEGJS_OPTIMIZE || 'speed';
 const isProduction = process.env.NODE_ENV === 'production';
 
-const dest = nonNull(['build/twitter-lang', optimize, isProduction && 'min', 'js']).join('.');
+const dest = nonNull([ 'build/twitter-lang', optimize, isProduction && 'min', 'js' ]).join('.');
 
 export default {
   entry: 'src/twitter-lang.pegjs',
@@ -17,7 +17,7 @@ export default {
   format: 'cjs',
   plugins: nonNull([
     pegjs({ optimize }),
-    babel({ babelrc: false, presets: ['es2015-rollup', 'stage-1'] }),
+    babel({ babelrc: false, presets: [ 'es2015-rollup', 'stage-1' ] }),
     isProduction ? uglify() : null,
     filesize({
       render: (options, size, gzip) => `
@@ -27,4 +27,4 @@ export default {
 `
     })
   ])
-}
+};

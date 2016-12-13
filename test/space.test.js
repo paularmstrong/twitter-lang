@@ -8,8 +8,8 @@ it('\\u0020', () => {
     entities: {
       hashtags: [],
       symbols: [
-        { text: 'twtr', indices: [0, 5] },
-        { text: 'twtr', indices: [6, 11] }
+        { text: 'twtr', indices: [ 0, 5 ] },
+        { text: 'twtr', indices: [ 6, 11 ] }
       ],
       urls: [],
       user_mentions: []
@@ -26,8 +26,8 @@ it('\\u00A0', () => {
     entities: {
       hashtags: [],
       symbols: [
-        { text: 'twtr', indices: [0, 5] },
-        { text: 'twtr', indices: [6, 11] }
+        { text: 'twtr', indices: [ 0, 5 ] },
+        { text: 'twtr', indices: [ 6, 11 ] }
       ],
       urls: [],
       user_mentions: []
