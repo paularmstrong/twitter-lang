@@ -43,7 +43,7 @@ Cashtag
     { return cashtag; }
 
 CashtagToken
-  = "$" symbol:$([a-zA-Z]+) subsymbol:$(("." / "_") [a-zA-Z]+)?
+  = "$" symbol:$([a-z]i+) subsymbol:$(("." / "_") [a-z]i [a-z]i?)?
     { return symbol.length <= 6 && { text: symbol + (subsymbol || ''), ...indices(location()) }; }
 
 Hashtag
