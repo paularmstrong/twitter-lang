@@ -19,10 +19,10 @@ it('\\u0020', () => {
   expect(actual).toEqual(expected);
 });
 
-it('\\u2001', () => {
-  const actual = parse('$twtr\u2001$twtr');
+it('\\u00A0', () => {
+  const actual = parse('$twtr\u00A0$twtr');
   const expected = {
-    text: '$twtr\u2001$twtr',
+    text: '$twtr\u00A0$twtr',
     entities: {
       hashtags: [],
       symbols: [

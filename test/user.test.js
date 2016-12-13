@@ -9,7 +9,7 @@ it('Single user using at-sign', () => {
       hashtags: [],
       symbols: [],
       urls: [],
-      user_mentions: [{ screen_name: 'username', indices: [0, 14] }]
+      user_mentions: [{ screen_name: 'username', indices: [0, 9] }]
     }
   };
 
@@ -40,8 +40,8 @@ it('Multiple users', () => {
       symbols: [],
       urls: [],
       user_mentions: [
-        { screen_name: 'username', indices: [0, 14] },
-        { screen_name: 'twitter', indices: [15, 23] }
+        { screen_name: 'username', indices: [0, 9] },
+        { screen_name: 'twitter', indices: [10, 18] }
       ]
     }
   };
