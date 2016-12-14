@@ -128,9 +128,9 @@ URL
     { return null; }
   / tco:$("http" "s"? "://t.co/" [a-z0-9]i+)
     { return { url: tco, ...indices(location()) }; }
-  / $(SubDomain? DomainChar+ "." CCTLD) &(Space / End)
-    { return null;}
-  / url:$(URLToken)
+  / Space url:$(SubDomain? DomainChar+ "." (GenericTLD / CCTLDSpecialCased) Port? Path*) &(Space / End)
+    { return { url }; }
+  / Protocol Space url:URLToken
     { return { url, ...indices(location()) }; }
   / url:$(Protocol URLToken)
     { return { url, ...indices(location()) }; }
@@ -139,7 +139,7 @@ URLToken
   = $(SubDomain? Domain Port? Path* Querystring?)
 
 URLInvalidPrefix
-  = "$"
+  = "$" / UserPrefix / HashtagPrefix
 
 Protocol
   = "http" "s"? "://"
@@ -148,7 +148,8 @@ Domain
   = DomainChar+ "." TLD &(Port / Path / Space / End)
 
 DomainChar
-  = $((AlphaNumeric / LatinAccent) ("-"? (AlphaNumeric / LatinAccent))+)
+  = "xn--"i [0-9a-z]i+
+  / $((AlphaNumeric / LatinAccent) ("-"? (AlphaNumeric / LatinAccent))+)
   / AlphaNumeric
   / LatinAccent
 
@@ -310,8 +311,8 @@ LatinAccent
 
 URLPathChar
   = [a-z0-9]i
-  / ("!" / "*" / "'" / ";" / ":" / "=" / "+" / "," / "." / "$" / "%" / "[" / "]" / "-" / "_" / "~" / "@" / "|" / "&") &(URLPathChar)
-  / "/" / "#" / "(" / ")"
+  / ("!" / "*" / "'" / ";" / ":" / "=" / "," / "." / "$" / "%" / "[" / "]" / "_" / "~" / "@" / "|" / "&") &(URLPathChar)
+  / "/" / "#" / "(" / ")" / "+" / "-"
   / LetterOrMark / LatinAccent
 
 URLQuerystringChar
