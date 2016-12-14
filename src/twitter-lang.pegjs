@@ -134,13 +134,13 @@ ListSlug
 URL
   = $(URLInvalidPrefix Protocol URLToken)
     { return null; }
-  / URLInvalidPrefix SubDomain? DomainChar+ "." tld:TLD Port? Path* &(Space / End)
-    { return validGenericTLD.test(tld) || validSpecialCasedCCTLD.test(tld) ? null : undefined; }
+  / URLInvalidPrefix SubDomain? DomainChar+ "." TLD Port? Path* &(Space / End)
+    { return null }
   / tco:$("http" "s"? "://t.co/" [a-z0-9]i+)
     { return { url: tco, ...indices(location()) }; }
   / domain:$(SubDomain? DomainChar+ ".") tld:TLD rest:$(Port? Path*) &(Space / End)
     {
-      return validGenericTLD.test(tld) || validSpecialCasedCCTLD.test(tld) ?
+      return validGenericTLD.test(tld) || validSpecialCasedCCTLD.test(tld) || (rest && validCCTLD.test(tld)) ?
         { url: (domain + tld + rest), ...indices(location()) } :
         null;
     }
@@ -150,7 +150,7 @@ URL
     { return { url, ...indices(location()) }; }
 
 URLToken
-  = $(SubDomain? Domain Port? Path* Querystring?)
+  = $(SubDomain? Domain Port? Path? Querystring?)
 
 URLInvalidPrefix
   = Punctuation / UserPrefix / HashtagPrefix
@@ -159,7 +159,7 @@ Protocol
   = "http" "s"? "://"
 
 Domain
-  = domain:$(DomainChar+ ".") tld:TLD &(Port / Path / Space / End)
+  = domain:$(DomainChar+ ".") tld:TLD &(Port / Path / Querystring / Space / End)
     { return validTLD.test(tld) ? (domain + tld) : null; }
 
 DomainChar
