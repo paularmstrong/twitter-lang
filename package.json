@@ -13,7 +13,7 @@
     "build:speed": "PEGJS_OPTIMIZE=speed rollup -c",
     "build:size": "PEGJS_OPTIMIZE=size rollup -c",
     "build:conformance": "rimraf test/conformance && babel-node scripts/build-conformance",
-    "clean": "rimraf build",
+    "clean": "rimraf build && rimraf *.log*",
     "lint": "eslint ./ --fix",
     "pretest": "npm run build:test",
     "test": "jest",
