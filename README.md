@@ -7,7 +7,7 @@ This is a work in progress – it is *not* ready for use.
 ### Conformance Tests
 This package aims to conform to the [twitter-text conformance tests](https://github.com/twitter/twitter-text/tree/2143a72d3da6bca49dc2f6d5c2df7d539d191cab/conformance)
 
-**Results:** 187/196 (95%)
+**Results:** 188/196 (96%)
 
 ## Example
 

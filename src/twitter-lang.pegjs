@@ -146,6 +146,8 @@ URL
     }
   / Protocol Space url:URLToken
     { return { url, ...indices(location()) }; }
+  / url:$(Protocol SubDomain? Domain) &("-")
+    { return { url, ...indices(location()) }; }
   / url:$(Protocol URLToken)
     { return { url, ...indices(location()) }; }
 
@@ -159,7 +161,7 @@ Protocol
   = "http" "s"? "://"
 
 Domain
-  = domain:$(DomainChar+ ".") tld:TLD &(Port / Path / Querystring / Space / End)
+  = domain:$(DomainChar+ ".") tld:TLD &(Port / Path / Querystring / Space / End / "-")
     { return validTLD.test(tld) ? (domain + tld) : null; }
 
 DomainChar
