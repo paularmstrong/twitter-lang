@@ -31,10 +31,10 @@ start
 /******************************************************************************/
 
 Entity
-  = url:URL
-    { return { url }; }
-  / symbol:Cashtag
+  = symbol:Cashtag
     { return { symbol }; }
+  / url:URL
+    { return { url }; }
   / hashtag:Hashtag
     { return { hashtag }; }
   / mention:(List / User)
@@ -126,9 +126,11 @@ ListSlug
 URL
   = $(URLInvalidPrefix Protocol URLToken)
     { return null; }
+  / URLInvalidPrefix url:$(SubDomain? DomainChar+ "." (GenericTLD / CCTLDSpecialCased) Port? Path*) &(Space / End)
+    { return null; }
   / tco:$("http" "s"? "://t.co/" [a-z0-9]i+)
     { return { url: tco, ...indices(location()) }; }
-  / Space url:$(SubDomain? DomainChar+ "." (GenericTLD / CCTLDSpecialCased) Port? Path*) &(Space / End)
+  / url:$(SubDomain? DomainChar+ "." (GenericTLD / CCTLDSpecialCased) Port? Path*) &(Space / End)
     { return { url }; }
   / Protocol Space url:URLToken
     { return { url, ...indices(location()) }; }
@@ -139,7 +141,7 @@ URLToken
   = $(SubDomain? Domain Port? Path* Querystring?)
 
 URLInvalidPrefix
-  = "$" / UserPrefix / HashtagPrefix
+  = Punctuation / UserPrefix / HashtagPrefix
 
 Protocol
   = "http" "s"? "://"
