@@ -12,7 +12,7 @@
     "build:production": "NODE_ENV=production npm-run-all --parallel build:speed build:size",
     "build:speed": "PEGJS_OPTIMIZE=speed rollup -c",
     "build:size": "PEGJS_OPTIMIZE=size rollup -c",
-    "build:conformance": "rimraf test/conformance && babel-node scripts/build-conformance",
+    "build:conformance": "rimraf test/conformance && babel-node scripts/build-conformance && npm run lint",
     "clean": "rimraf build && rimraf *.log*",
     "lint": "eslint ./ --fix",
     "pretest": "npm run build:test",
