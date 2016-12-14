@@ -134,7 +134,7 @@ ListSlug
 URL
   = $(URLInvalidPrefix Protocol URLToken)
     { return null; }
-  / URLInvalidPrefix SubDomain? DomainChar+ "." TLD Port? Path* &(Space / End)
+  / (URLInvalidPrefix / Punctuation) SubDomain? DomainChar+ "." TLD Port? Path* &(Space / End)
     { return null }
   / tco:$("http" "s"? "://t.co/" [a-z0-9]i+)
     { return { url: tco, ...indices(location()) }; }
@@ -158,7 +158,7 @@ URLToken
   = $(SubDomain? Domain Port? Path? Querystring?)
 
 URLInvalidPrefix
-  = Punctuation / UserPrefix / HashtagPrefix
+  = "$" / UserPrefix / HashtagPrefix
 
 Protocol
   = "http" "s"? "://"
