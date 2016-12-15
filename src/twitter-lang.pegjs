@@ -173,7 +173,8 @@ DomainChar
   / ValidDomainChar
 
 ValidDomainChar
-  = AlphaNumeric / CyrillicLetterOrMark / LatinAccent
+  // Invalid Chars, Newline/Return/Tab, Space, Punctuation
+  = [^\uFFFF\uFEFF\uFFFE\n\r\t\u0020\u0085\u00A0\u1680\u180E\u2028\u2029\u202F\u205F\u3000\u2000-\u200A\u2000-\u200A"!'#%&'\(\)*+,\-\.\/:;<=>?@\[\]\^_{|}~$]
 
 SubDomain
   = $(SubDomainChar+ ".") &Domain
